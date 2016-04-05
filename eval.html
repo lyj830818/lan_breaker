@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<title>ACE in Action</title>
+<style type="text/css" media="screen">
+    .container {
+        width:100%;
+    }
+    .editor-containner{
+        width: 50%;
+        position: relative;
+        height:900px;
+        float:left;
+    }
+    .result-container{
+        height: 900px;
+        background-color: black;
+        color: white;
+
+    }
+    #editor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .operation{
+        background-color: aqua;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="operation">
+        <button id="submit-btn">提交</button>
+    </div>
+    <div class="editor-containner">
+        <div id="editor">
+a = '2'
+ss = '3'
+if a is None:
+    print "xxx"
+        </div>
+
+    </div>
+    <div class="result-container" id="result"></div>
+
+</div>
+
+<script src="//cdn.bootcss.com/jquery/2.2.0/jquery.js"></script>
+<script src="//cdn.bootcss.com/ace/1.2.3/ace.js"></script>
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/python");
+
+    $('#submit-btn').on('click', function(){
+        $.ajax({
+            url : '/eval',
+            type : 'POST',
+            data : editor.getValue(),
+        })
+    });
+</script>
+</body>
+</html>
